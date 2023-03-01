@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starwars</title>
+    <style>
+        body {
+            margin-left: 25%;
+        }
+
+        .main-img {
+            padding: 20px 0 20px 0;
+        }
+
+        .margin-20 {
+            margin: 30px 0 0 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h2>Starwars Introductory!</h2>
+    </main>
+    <article>
+        <div>
+            <span class="top-right"><img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ2cRPHReBxMrc45852ZNsUh-2Umup1QY-Jw&usqp=CAU"
+                    alt="Profile" width="20px">
+            </span>
+            <strong class="name">Starwars Info</strong>
+        </div>
+
+        <div class="main-img"><img
+                src="http://blog.mycode.website/wp-content/uploads/2017/10/sc1.png"
+                alt="Photograph" width="250px"></div>
+
+
+        <strong>Home World: </strong>
+        <spam id="homeworld">Indi</spam><br>
+
+        <strong>Eye Color: </strong>
+        <span id="eyecolor">...</span><br>
+
+        <strong>Height: </strong>
+        <span id="height">...</span><br>
+
+        <strong>Died Location: </strong>
+        <span id="cybernetics">...</span><br>
+
+        <button class="margin-20" id="more">See more</button>
+    </article>
+
+
+
+
+    <script>
+
+        const name = document.querySelector(".name")
+        const img = document.querySelector(".main-img")
+        const pimg = document.querySelector(".top-right")
+        const hw = document.getElementById("homeworld")
+        const ec = document.getElementById("eyecolor")
+        const h = document.getElementById("height")
+        const cn = document.getElementById("cybernetics")
+
+
+
+        document.getElementById("more").addEventListener('click', () => {
+
+            img.innerHTML = "<em>Loading..</em>"
+            let rand = Math.round(Math.random() * 88);
+            fetch(`https://akabab.github.io/starwars-api/api/id/${rand}.json`)
+                .then(response => response.json())
+                .then(thisapi => {
+                    
+                    name.innerHTML = `<strong>${thisapi['name']}</strong>`;
+
+                    hw.innerText = thisapi['homeworld'];
+                    ec.innerText = thisapi['eyeColor'];
+                    h.innerText = thisapi['height'];
+
+                    if (typeof (thisapi['diedLocation']) == "undefined") {
+                        cn.innerText = "Not known";
+                    }
+                    else {
+                        cn.innerText = thisapi['diedLocation']
+                    }
+
+                    img.innerHTML = `<img
+                src="${thisapi['image']}" alt="main food pic" width="260px">`
+
+                    pimg.innerHTML = `<img
+                src="${thisapi['image']}" alt="profile" width="18px">`
+                })
+
+        })
+    </script>
+</body>
+
+</html>
